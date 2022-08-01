@@ -16,3 +16,50 @@ img {
   display: block;
   max-width: 100%;
 }
+.container {
+  display: flex;
+  justify-content: center;
+}
+.btn:first-child {
+  margin-right: 40px;
+}
+.btn {
+  display: inline-block;
+  text-decoration: none;
+  /* background: #8cd460; */
+  color: rgba(255, 255, 255, 0.47);
+  font-weight: bold;
+  width: 120px;
+  height: 120px;
+  line-height: 120px;
+  border-radius: 50%;
+  text-align: center;
+  vertical-align: middle;
+  /* overflow: hidden; */
+  /* box-shadow: 0px 0px 0px 5px #8cd460; */
+  /* border: solid 2px rgba(255, 255, 255, 0.47); */
+  /* transition: 4s; */
+  cursor:pointer
+}
+.start {
+  background: #8cd460;
+  box-shadow: 0px 0px 0px 5px #8cd460;
+}
+
+.stop {
+  background: #ff8181;
+  box-shadow: 0px 0px 0px 5px #ff8181;
+}
+/* .btn:hover {
+  border-style: dashed;
+} */
+.disabled{
+  background-color:darkgrey;
+  cursor: not-allowed;
+}
+
+/* .btn[disabled]:hover {
+  border-style: none;
+} */
+
+
