@@ -7,7 +7,7 @@ const refs = {
 /******************************Const for class***************************** */
 const DISABLE_CLASS = 'disabled';
 
-/************************************Слухачі подій************************************* */
+/************************************EventListener************************************* */
 refs.btnStart.addEventListener('click', onCklickBtnStart);
 refs.btnStop.addEventListener('click', onCklickBtnStop);
 
@@ -24,7 +24,6 @@ function onCklickBtnStart(evt) {
   timerId = setInterval(() => {
     refs.body.style.backgroundColor = getRandomHexColor();
   }, 1000);
-  console.log('start');
 }
 /************************************Function stop interval****** */
 function onCklickBtnStop(evt) {
@@ -34,7 +33,6 @@ function onCklickBtnStop(evt) {
   const currentEl = evt.target;
   addRemoveDisabledClass(currentEl, refs.btnStart, DISABLE_CLASS);
   clearInterval(timerId);
-  console.log('stop');
 }
 /**********************************Function adds or removes class******************* */
 
