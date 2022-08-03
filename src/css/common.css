@@ -38,7 +38,7 @@ img {
   overflow: hidden;
   box-shadow: 0px 0px 0px 5px #8cd460;
   border: solid 2px rgba(255, 255, 255, 0.47);
-  transition: 4s;
+  /* transition: 4s; */
   cursor:pointer
 }
 .start {
@@ -55,7 +55,8 @@ img {
 }
 .disabled{
   background-color:#a8a7a7;
-  box-shadow: 0px 0px 0px 5px #a8a7a7;
+  
+  /* box-shadow: 0px 0px 0px 5px #a8a7a7; */
   cursor: not-allowed;
 }
 
