@@ -31,25 +31,71 @@ import { Notify } from 'notiflix/build/notiflix-notify-aio';
 //**************************another model******************************************* */
 
 //**************************refs******************************************* */
+
 const refs = {
   secondsEl: document.querySelector('.value[data-seconds]'),
   minutesEl: document.querySelector('.value[data-minutes]'),
   hoursEl: document.querySelector('.value[data-hours]'),
   daysEl: document.querySelector('.value[data-days]'),
   inputEl: document.querySelector('#datetime-picker'),
+  btnStartEl: document.querySelector('button[data-start]'),
 };
+const DISABLED = 'disabled';
+refs.btnStartEl.setAttribute(DISABLED, DISABLED);
+let deadline = null;
+
 //**************************options for the library flatpickr******************************************* */
+
 const options = {
   enableTime: true,
   time_24hr: true,
   defaultDate: new Date(),
   minuteIncrement: 1,
   onClose(selectedDates) {
-    console.log(selectedDates[0]);
+    deadline = selectedDates[0].getTime();
+    // console.log(selectedDates);
+    // console.log(deadline);
+    const delta = deadline - Date.now();
+    // console.log(delta);
+    if (delta <= 0) {
+      // alert('Please choose a date in the future!');
+      Notify.failure('Please choose a date in the future!');
+      return;
+    }
+    refs.btnStartEl.removeAttribute(DISABLED);
   },
 };
-//************************** library initialization******************************************* */
+
 flatpickr('#datetime-picker', options);
+
+refs.btnStartEl.addEventListener('click', onClickBtnStart);
+
+let timerId = null;
+
+function onClickBtnStart(evt) {
+  refs.btnStartEl.setAttribute(DISABLED, DISABLED);
+  refs.inputEl.setAttribute(DISABLED, DISABLED);
+  if (timerId > 0) {
+    return;
+  }
+  timerId = setInterval(() => {
+    const delta = deadline - Date.now();
+    const { days, hours, minutes, seconds } = convertMs(delta);
+    if (delta >= 0) {
+      refs.secondsEl.textContent = addLeadingZero(seconds);
+      refs.minutesEl.textContent = addLeadingZero(minutes);
+      refs.hoursEl.textContent = addLeadingZero(hours);
+      refs.daysEl.textContent = addLeadingZero(days);
+    } else {
+      Notify.success('The timer stopped.', {
+        timeout: 4000,
+      });
+      // Notify.failure('The timer stopped.', { timeout: 2000 });
+      clearInterval(timerId);
+    }
+  }, 1000);
+}
+
 function convertMs(ms) {
   // Number of milliseconds per unit of time
   const second = 1000;
@@ -69,8 +115,6 @@ function convertMs(ms) {
   return { days, hours, minutes, seconds };
 }
 
-console.log(convertMs(2000)); // {days: 0, hours: 0, minutes: 0, seconds: 2}
-console.log(convertMs(140000)); // {days: 0, hours: 0, minutes: 2, seconds: 20}
-console.log(convertMs(24140000)); // {days: 0, hours: 6 minutes: 42, seconds: 20}
-
-//**************************another model******************************************* */
+function addLeadingZero(value) {
+  return String(value).padStart(2, '0');
+}
