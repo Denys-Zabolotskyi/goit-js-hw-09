@@ -30,8 +30,6 @@ import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
 //**************************another model******************************************* */
 
-//**************************refs******************************************* */
-
 const refs = {
   secondsEl: document.querySelector('.value[data-seconds]'),
   minutesEl: document.querySelector('.value[data-minutes]'),
@@ -40,11 +38,10 @@ const refs = {
   inputEl: document.querySelector('#datetime-picker'),
   btnStartEl: document.querySelector('button[data-start]'),
 };
+
 const DISABLED = 'disabled';
 refs.btnStartEl.setAttribute(DISABLED, DISABLED);
 let deadline = null;
-
-//**************************options for the library flatpickr******************************************* */
 
 const options = {
   enableTime: true,
@@ -53,12 +50,8 @@ const options = {
   minuteIncrement: 1,
   onClose(selectedDates) {
     deadline = selectedDates[0].getTime();
-    // console.log(selectedDates);
-    // console.log(deadline);
     const delta = deadline - Date.now();
-    // console.log(delta);
     if (delta <= 0) {
-      // alert('Please choose a date in the future!');
       Notify.failure('Please choose a date in the future!');
       return;
     }
@@ -90,7 +83,6 @@ function onClickBtnStart(evt) {
       Notify.success('The timer stopped.', {
         timeout: 4000,
       });
-      // Notify.failure('The timer stopped.', { timeout: 2000 });
       clearInterval(timerId);
     }
   }, 1000);
